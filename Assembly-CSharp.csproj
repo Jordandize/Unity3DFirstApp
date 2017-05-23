@@ -46,8 +46,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\DeathHere.cs" />
      <Compile Include="Assets\HeroFollow.cs" />
      <Compile Include="Assets\HeroRabit.cs" />
+     <Compile Include="Assets\LevelController.cs" />
+     <Compile Include="Assets\ParallaxLayer.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
