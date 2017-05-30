@@ -5,12 +5,17 @@ using UnityEngine;
 public class HeroRabit : MonoBehaviour {
 
     Rigidbody2D myBody = null;
+    Transform heroParent = null;
 
     public float speed     = 3f;
     public float JumpSpeed = 2f;
 
     bool isGrounded = false;
     bool JumpActive = false;
+    bool isLikeHalk = false;
+    bool isRabitDie = false;
+
+    Vector3 originScale;
 
     float JumpTime = 0f;
 
@@ -18,17 +23,22 @@ public class HeroRabit : MonoBehaviour {
     
 	void Start () {
         myBody = GetComponent<Rigidbody2D>();
+        this.heroParent = this.transform.parent;
+        originScale = this.transform.localScale;
         LevelController.current.setStartPosition(transform.position);
     }
 	
 	void Update () {
-        Animator animator = GetComponent<Animator>();
+        if(isRabitDie) return;
 
+        Animator animator = GetComponent<Animator>();
         UpdateRun(animator);
         UpdateJump(animator);
     }
 
     void FixedUpdate() {
+
+        if(isRabitDie) return;
 
         FixedUpdateRun(); //speed of rabit
         FixedUpdateGround(); //or rabit on ground
@@ -73,15 +83,21 @@ public class HeroRabit : MonoBehaviour {
 
     void FixedUpdateGround() {
         Vector3 from = transform.position + Vector3.up * 0.3f;
-        Vector3 to = transform.position + Vector3.down * 0.1f;
+        Vector3 to = transform.position + Vector3.down * 0.05f;
         int layer_id = 1 << LayerMask.NameToLayer("Ground");
 
         RaycastHit2D hit = Physics2D.Linecast(from, to, layer_id);
 
         if (hit) {
             isGrounded = true;
+
+            if(hit.transform != null
+                && hit.transform.GetComponent<MovingPlatform>() != null) {
+                setNewParent(this.transform, hit.transform);
+            }
         } else {
             isGrounded = false;
+            setNewParent(this.transform, this.heroParent);
         }
         //for debag
         Debug.DrawLine(from, to, Color.red);
@@ -105,6 +121,40 @@ public class HeroRabit : MonoBehaviour {
                 this.JumpTime = 0;
             }
         }
+    }
+
+    static void setNewParent(Transform obj, Transform newParent) {
+        if(obj.transform.parent != newParent) {
+            Vector3 pos = obj.transform.position;
+            obj.transform.parent = newParent;
+            obj.transform.position = pos;
+        }
+    }
+
+    public void eatMushroom() {
+        isLikeHalk = true;
+        this.transform.localScale *= 1.7f;
+    }
+
+    public void stepOnBomb() {
+        if(isLikeHalk) {
+            isLikeHalk = false;
+            this.transform.localScale = originScale;
+        } else {
+            StartCoroutine (rebirthLater());
+        }
+    }
+
+    IEnumerator rebirthLater() {
+        Animator animator = GetComponent<Animator>();
+        animator.SetBool("die", true);
+        isRabitDie = true;
+
+        yield return new WaitForSeconds(2f);
+
+        isRabitDie = false;
+        animator.SetBool("die", false);
+        LevelController.current.onRabitDeath(this);
     }
 
 }
