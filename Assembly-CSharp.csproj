@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Bomb.cs" />
+     <Compile Include="Assets\Carrot.cs" />
      <Compile Include="Assets\Coins.cs" />
      <Compile Include="Assets\Collectable.cs" />
      <Compile Include="Assets\Crystal.cs" />
@@ -57,6 +58,8 @@
      <Compile Include="Assets\LevelController.cs" />
      <Compile Include="Assets\MovingPlatform.cs" />
      <Compile Include="Assets\Mushroom.cs" />
+     <Compile Include="Assets\Orc1.cs" />
+     <Compile Include="Assets\Orc2.cs" />
      <Compile Include="Assets\ParallaxLayer.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

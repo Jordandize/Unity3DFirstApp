@@ -20,7 +20,7 @@ public class MovingPlatform : MonoBehaviour {
         this.pointB = this.pointA + moveBy;
     }
 	
-	void FixedUpdate () {
+	void Update () {
         Vector3 myPosition = this.transform.position;
 
         Vector3 target;

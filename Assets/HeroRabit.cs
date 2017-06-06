@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HeroRabit : MonoBehaviour {
 
+    public static HeroRabit lastRabit = null;
+
     Rigidbody2D myBody = null;
     Transform heroParent = null;
 
@@ -20,8 +22,22 @@ public class HeroRabit : MonoBehaviour {
     float JumpTime = 0f;
 
     public float MaxJumpTime = 2f;
-    
-	void Start () {
+
+    public Vector3 btnLft() {
+        BoxCollider2D boxcol = this.GetComponent<BoxCollider2D>();
+
+        Vector3 world = transform.TransformPoint(boxcol.offset);
+        float rbot = world.y - (boxcol.size.y / 2f);
+        float rlef = world.x - (boxcol.size.x / 2f);
+
+        return new Vector3(rlef, rbot, 0f);
+    }
+
+    void Awake() {
+        lastRabit = this;
+    }
+
+    void Start () {
         myBody = GetComponent<Rigidbody2D>();
         this.heroParent = this.transform.parent;
         originScale = this.transform.localScale;
@@ -43,7 +59,6 @@ public class HeroRabit : MonoBehaviour {
         FixedUpdateRun(); //speed of rabit
         FixedUpdateGround(); //or rabit on ground
         FixedUpdateJump(); //jump of rabit
-
     }
 
     void UpdateRun(Animator animator) {
@@ -141,14 +156,20 @@ public class HeroRabit : MonoBehaviour {
             isLikeHalk = false;
             this.transform.localScale = originScale;
         } else {
-            StartCoroutine (rebirthLater());
+            deadRabit();
         }
+    }
+
+    public void deadRabit() {
+        if(!isRabitDie)
+            StartCoroutine(rebirthLater());
     }
 
     IEnumerator rebirthLater() {
         Animator animator = GetComponent<Animator>();
         animator.SetBool("die", true);
         isRabitDie = true;
+        
 
         yield return new WaitForSeconds(2f);
 
@@ -156,5 +177,4 @@ public class HeroRabit : MonoBehaviour {
         animator.SetBool("die", false);
         LevelController.current.onRabitDeath(this);
     }
-
 }
