@@ -70,13 +70,13 @@ public class Orc2 : MonoBehaviour {
         }
 
         Animator animator = GetComponent<Animator>();
-        if(mode != Mode.Attack) {
+        if(mode != Mode.Attack && value != 0) {
             animator.SetBool("run", true);
         } else {
             animator.SetBool("run", false);
         }
 
-        if(mode != Mode.Attack) {
+        if(mode != Mode.Attack && value != 0) {
             this.transform.position += speed * Time.deltaTime;
         }
     }
@@ -146,6 +146,7 @@ public class Orc2 : MonoBehaviour {
         } else if(mode == Mode.Attack) {
             mode = last;
         }
+        if(speed.x == 0) return 0;
         if(mode == Mode.GoToA) { return -1; }
         if(mode == Mode.GoToB) { return  1; }
         inZone = false;

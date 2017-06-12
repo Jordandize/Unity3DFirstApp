@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class HeroRabit : MonoBehaviour {
@@ -22,6 +23,12 @@ public class HeroRabit : MonoBehaviour {
     float JumpTime = 0f;
 
     public float MaxJumpTime = 2f;
+
+    int coins  = 0;
+    int fruits = 0;
+    int lifes  = 3;
+
+    bool[] crystals = new bool[3];
 
     public Vector3 btnLft() {
         BoxCollider2D boxcol = this.GetComponent<BoxCollider2D>();
@@ -166,15 +173,57 @@ public class HeroRabit : MonoBehaviour {
     }
 
     IEnumerator rebirthLater() {
+        removeLife();
         Animator animator = GetComponent<Animator>();
         animator.SetBool("die", true);
         isRabitDie = true;
         
-
         yield return new WaitForSeconds(2f);
 
-        isRabitDie = false;
-        animator.SetBool("die", false);
-        LevelController.current.onRabitDeath(this);
+        if(checkLife()) {
+            isRabitDie = false;
+            isLikeHalk = false;
+            animator.SetBool("die", false);
+            this.transform.localScale = originScale;
+            LevelController.current.onRabitDeath(this);
+        }
     }
+
+    public int addCoin() {
+        return ++coins;
+    }
+
+    public int addFruit() {
+        return ++fruits;
+    }
+
+    public int addCrystal(int type) {
+        if(type < 1 || type > 3) return type;
+        crystals[type - 1] = true;
+        return type;
+    }
+
+    public void removeLife() {
+        if(lifes == 3) {
+            Life3.life3.loseLife3();
+        } else if(lifes == 2) {
+            Life2.life2.loseLife2();
+        } else if(lifes == 1) {
+            Life1.life1.loseLife1();
+        }
+        lifes--;
+    }
+
+    public bool isDie() {
+        return isRabitDie;
+    }
+
+    public bool checkLife() {
+        if(lifes < 1) {
+            SceneManager.LoadScene("LevelMenu");
+            return false;
+        }
+        return true;
+    }
+
 }

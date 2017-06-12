@@ -8,7 +8,8 @@ public class DeathHere : MonoBehaviour {
         HeroRabit rabit = collider.GetComponent<HeroRabit>();
 
         if(rabit != null) {
-            LevelController.current.onRabitDeath(rabit);
+            if(!rabit.isDie())
+                LevelController.current.onRabitDeath(rabit);
         }
     }
 
