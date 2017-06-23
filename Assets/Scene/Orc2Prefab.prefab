@@ -169,6 +169,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be52897f48a1a7248afef862c3e77650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackSound1: {fileID: 8300000, guid: ece9b14a232f14f48ab9a5e844cb5daf, type: 3}
+  attackSound2: {fileID: 8300000, guid: 17ceaa42e8466455b8b6886e78c357f9, type: 3}
+  deathSound: {fileID: 8300000, guid: 0da0a61767f664de1a8b3e03d7ca4d4e, type: 3}
   moveBy: {x: 2, y: 0, z: 0}
   speed: {x: 1, y: 0, z: 0}
   radius: 7

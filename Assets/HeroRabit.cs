@@ -7,11 +7,21 @@ public class HeroRabit : MonoBehaviour {
 
     public static HeroRabit lastRabit = null;
 
-    Rigidbody2D myBody = null;
-    Transform heroParent = null;
+    public AudioClip walkSound = null;
+    public AudioClip diedSound = null;
+    public AudioClip landSound = null;
+
+    public GameObject losePrefab;
 
     public float speed     = 3f;
     public float JumpSpeed = 2f;
+
+    Rigidbody2D myBody   = null;
+    Transform heroParent = null;
+
+    AudioSource walkSource = null;
+    AudioSource diedSource = null;
+    AudioSource landSource = null;
 
     bool isGrounded = false;
     bool JumpActive = false;
@@ -29,6 +39,8 @@ public class HeroRabit : MonoBehaviour {
     int lifes  = 3;
 
     bool[] crystals = new bool[3];
+
+    LevelStat stats = new LevelStat();
 
     public Vector3 btnLft() {
         BoxCollider2D boxcol = this.GetComponent<BoxCollider2D>();
@@ -49,6 +61,12 @@ public class HeroRabit : MonoBehaviour {
         this.heroParent = this.transform.parent;
         originScale = this.transform.localScale;
         LevelController.current.setStartPosition(transform.position);
+        walkSource = gameObject.AddComponent<AudioSource>();
+        diedSource = gameObject.AddComponent<AudioSource>();
+        landSource = gameObject.AddComponent<AudioSource>();
+        walkSource.clip = walkSound;
+        diedSource.clip = diedSound;
+        landSource.clip = landSound;
     }
 	
 	void Update () {
@@ -186,6 +204,8 @@ public class HeroRabit : MonoBehaviour {
             animator.SetBool("die", false);
             this.transform.localScale = originScale;
             LevelController.current.onRabitDeath(this);
+        } else {
+            HeroRabit.lastRabit.isRabitDie = true;
         }
     }
 
@@ -220,10 +240,58 @@ public class HeroRabit : MonoBehaviour {
 
     public bool checkLife() {
         if(lifes < 1) {
-            SceneManager.LoadScene("LevelMenu");
+            GameObject parent = UICamera.first.transform.parent.gameObject;
+            NGUITools.AddChild(parent, losePrefab);
+
+            HeroRabit.lastRabit.enabled = false;
+            Destroy(HeroRabit.lastRabit.GetComponent<Rigidbody2D>());
             return false;
         }
         return true;
+    }
+
+    public int getFruits() {
+        return fruits;
+    }
+
+    public int getCoins() {
+        return coins;
+    }
+
+    public bool hasCrystal(int i) {
+        return crystals[i];
+    }
+
+    public void saveStats() {
+        string level = SceneManager.GetActiveScene().name;
+
+        string lastLevelStr = PlayerPrefs.GetString(level);
+        LevelStat lastStats = JsonUtility.FromJson<LevelStat>(lastLevelStr);
+        if(lastStats == null) {
+            lastStats = new LevelStat();
+        }
+
+        if(LevelController.current.maxFruits == fruits)
+            stats.hasAllFruits = (true || lastStats.hasAllFruits);
+
+        bool hasCrystals = true;
+        for(int i = 0; i < crystals.Length && hasCrystals; i++) {
+            if(!crystals[i]) hasCrystals = false;
+        }
+        stats.hasCrystals = (hasCrystals || lastStats.hasCrystals);
+
+        if(!isRabitDie)
+            stats.levelPassed = (true || lastStats.levelPassed);
+
+        string str = JsonUtility.ToJson(stats);
+        PlayerPrefs.SetString(level, str);
+    }
+
+    public void saveCoins() {
+        int globalCoins = PlayerPrefs.GetInt("coins");
+        globalCoins += coins;
+
+        PlayerPrefs.SetInt("coins", globalCoins);
     }
 
 }

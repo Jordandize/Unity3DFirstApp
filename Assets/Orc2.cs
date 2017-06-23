@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Orc2 : MonoBehaviour {
 
+    public AudioClip attackSound1 = null;
+    public AudioClip attackSound2 = null;
+    public AudioClip deathSound   = null;
+
     public enum Mode {
         GoToA,
         GoToB,
@@ -12,6 +16,10 @@ public class Orc2 : MonoBehaviour {
 
     public Vector3 moveBy = new Vector3(0.5f, 0, 0);
     public Vector3 speed  = new Vector3(2.0f, 0, 0);
+
+    AudioSource attackSource1 = null;
+    AudioSource attackSource2 = null;
+    AudioSource deathSource   = null;
 
     Vector3 forward;
     Vector3 backward;
@@ -36,6 +44,12 @@ public class Orc2 : MonoBehaviour {
         this.pointB = this.pointA + moveBy;
         forward  =  speed;
         backward = -speed;
+        attackSource1 = gameObject.AddComponent<AudioSource>();
+        attackSource1.clip = attackSound1;
+        attackSource2 = gameObject.AddComponent<AudioSource>();
+        attackSource2.clip = attackSound2;
+        deathSource = gameObject.AddComponent<AudioSource>();
+        deathSource.clip = deathSound;
     }
 
     void Update() {
@@ -63,7 +77,7 @@ public class Orc2 : MonoBehaviour {
                 mode = Mode.GoToB;
             }
         } else if(mode == Mode.Attack) {
-            if(inZone && (Time.time - reload > 2f)) {
+            if(inZone && (Time.time - reload > 2f) && !HeroRabit.lastRabit.isDie()) {
                 launchCarrot(value);
                 reload = Time.time;
             }
@@ -82,6 +96,7 @@ public class Orc2 : MonoBehaviour {
     }
 
     void launchCarrot(float direction) {
+        if(SoundManager.instance.isSoundOn()) attackSource1.Play();
         Animator animator = GetComponent<Animator>();
         animator.SetTrigger("attack");
 
@@ -108,6 +123,7 @@ public class Orc2 : MonoBehaviour {
 
     IEnumerator killRabit(HeroRabit rabit) {
         Animator animator = GetComponent<Animator>();
+        if(SoundManager.instance.isSoundOn()) attackSource2.Play();
         animator.SetTrigger("attack2");
         rabit.deadRabit();
         isKiller = true;
@@ -119,6 +135,7 @@ public class Orc2 : MonoBehaviour {
 
     IEnumerator killedByRabit() {
         Animator animator = GetComponent<Animator>();
+        if(SoundManager.instance.isSoundOn()) deathSource.Play();
         animator.SetTrigger("die");
         isHidden = true;
 

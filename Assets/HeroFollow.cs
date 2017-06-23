@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class HeroFollow : MonoBehaviour {
 
-    public HeroRabit rabit;
+    public HeroRabit rabit = null;
    
 	void Update () {
+        Debug.Log(rabit);
+
         Transform rabitTransform = rabit.transform;
         Transform cameraTransform = this.transform;
        

@@ -6,7 +6,9 @@ public class LevelController : MonoBehaviour {
 
     public static LevelController current;
 
-    Vector3    startingPosition;
+    public int maxFruits = 0;
+
+    Vector3 startingPosition;
 
     void Awake() {
         current = this;

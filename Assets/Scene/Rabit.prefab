@@ -22,8 +22,10 @@ GameObject:
   - component: {fileID: 212106873809896278}
   - component: {fileID: 50067915334173498}
   - component: {fileID: 61007211229872526}
-  - component: {fileID: 114222495995113882}
   - component: {fileID: 95530259974545288}
+  - component: {fileID: 114945186762766504}
+  - component: {fileID: 114461285871764528}
+  - component: {fileID: 114478661883408862}
   m_Layer: 0
   m_Name: Rabit
   m_TagString: Untagged
@@ -38,7 +40,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1840552733070518}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 0.02, y: 0.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -106,7 +108,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114222495995113882
+--- !u!114 &114461285871764528
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -117,9 +119,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2052a92629d5dfc4ba18f23e053cec58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkSound: {fileID: 0}
+  diedSound: {fileID: 0}
+  landSound: {fileID: 0}
+  losePrefab: {fileID: 1149599660207512, guid: 9cbca36c8b9534340b930f9c48952f3b, type: 2}
   speed: 3
   JumpSpeed: 2
   MaxJumpTime: 2
+--- !u!114 &114478661883408862
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1840552733070518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 174f843837c5e764d9c62372aea61786, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rabit: {fileID: 114461285871764528}
+--- !u!114 &114945186762766504
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1840552733070518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1013dd904e71c174bacfa55dac5f72f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  music: {fileID: 8300000, guid: 57a5b2120c2d04fa9bcb5b2e99ee9361, type: 3}
 --- !u!212 &212106873809896278
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -46,8 +46,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\BackgroundMusic.cs" />
      <Compile Include="Assets\Bomb.cs" />
      <Compile Include="Assets\Carrot.cs" />
+     <Compile Include="Assets\ClosePopUpButton.cs" />
      <Compile Include="Assets\Coins.cs" />
      <Compile Include="Assets\CoinsLabel.cs" />
      <Compile Include="Assets\Collectable.cs" />
@@ -57,11 +59,14 @@
      <Compile Include="Assets\Crystal3.cs" />
      <Compile Include="Assets\DeathHere.cs" />
      <Compile Include="Assets\Door.cs" />
+     <Compile Include="Assets\ExitDoor.cs" />
      <Compile Include="Assets\Fruit.cs" />
      <Compile Include="Assets\FruitsLabel.cs" />
+     <Compile Include="Assets\GeneralGoinsLabel.cs" />
      <Compile Include="Assets\HeroFollow.cs" />
      <Compile Include="Assets\HeroRabit.cs" />
      <Compile Include="Assets\LevelController.cs" />
+     <Compile Include="Assets\LevelStat.cs" />
      <Compile Include="Assets\Libraries\GUI\Scripts\Interaction\EnvelopContent.cs" />
      <Compile Include="Assets\Libraries\GUI\Scripts\Interaction\LanguageSelection.cs" />
      <Compile Include="Assets\Libraries\GUI\Scripts\Interaction\TypewriterEffect.cs" />
@@ -174,13 +179,21 @@
      <Compile Include="Assets\Life1.cs" />
      <Compile Include="Assets\Life2.cs" />
      <Compile Include="Assets\Life3.cs" />
+     <Compile Include="Assets\LoseLevelHandler.cs" />
      <Compile Include="Assets\MovingPlatform.cs" />
      <Compile Include="Assets\Mushroom.cs" />
+     <Compile Include="Assets\MusicButton.cs" />
      <Compile Include="Assets\MyButton.cs" />
      <Compile Include="Assets\Orc1.cs" />
      <Compile Include="Assets\Orc2.cs" />
      <Compile Include="Assets\ParallaxLayer.cs" />
      <Compile Include="Assets\PlayButton.cs" />
+     <Compile Include="Assets\ReloadButton.cs" />
+     <Compile Include="Assets\SettingButton.cs" />
+     <Compile Include="Assets\SettingsPopUp.cs" />
+     <Compile Include="Assets\SoundButtom.cs" />
+     <Compile Include="Assets\SoundManager.cs" />
+     <Compile Include="Assets\WinLevelHandler.cs" />
      <None Include="Assets\Libraries\GUI\Resources\Shaders\Unlit - Transparent Masked 1.shader" />
      <None Include="Assets\Libraries\GUI\Resources\Shaders\Unlit - Text 2.shader" />
      <None Include="Assets\Libraries\GUI\Resources\Shaders\Unlit - Transparent Masked 2.shader" />
